@@ -40,7 +40,7 @@ public class CameraController : SceneSingleton<CameraController>
         if (check)
         {
             CameraMove();
-            OnMouseDrag();
+            CameraTransform();
         }
 
     }
@@ -82,6 +82,34 @@ public class CameraController : SceneSingleton<CameraController>
             camera.transform.RotateAround(center, -camera.transform.right, mouse_y * rotateSpeed * Time.deltaTime * 1000);
             Quaternion temp = camera.transform.rotation;
             Debug.Log(temp+"1");
+            temp.z = 0;
+            Debug.Log(temp);
+            camera.transform.rotation = temp;
+        }
+    }
+
+    public void CameraTransform()
+    {
+        var mouse_x = Input.GetAxis("Mouse X");
+        var mouse_y = Input.GetAxis("Mouse Y");
+        if (Input.GetMouseButton(1))   //鼠标右键平移  
+        {
+            camera.transform.Translate(Vector3.left * mouse_x * translateSpeed * Time.deltaTime * 1000);
+            camera.transform.Translate(-Vector3.up * mouse_y * translateSpeed * Time.deltaTime * 1000);
+        }
+
+        if (Input.GetMouseButton(0))    //鼠标左键旋转   绕场景中心
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                center = camera.transform.position + camera.transform.forward * 10;
+            }
+            //camera.transform.RotateAround(center.transform.position, Vector3.up, mouse_x * rotateSpeed * Time.deltaTime * 1000);
+            //camera.transform.RotateAround(center.transform.position, -camera.transform.right, mouse_y * rotateSpeed * Time.deltaTime * 1000);
+            camera.transform.RotateAround(center, Vector3.up, mouse_x * rotateSpeed * Time.deltaTime * 1000);
+            camera.transform.RotateAround(center, -camera.transform.right, mouse_y * rotateSpeed * Time.deltaTime * 1000);
+            Quaternion temp = camera.transform.rotation;
+            Debug.Log(temp + "1");
             temp.z = 0;
             Debug.Log(temp);
             camera.transform.rotation = temp;

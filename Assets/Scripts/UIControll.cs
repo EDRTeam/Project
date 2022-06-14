@@ -26,7 +26,7 @@ public class UIControll : MonoBehaviour
     public GameObject StandardModel;
     //public GameObject Modeltimu;
 
-    public GameObject viewer;
+    public GameObject viewer;     //ËõÂÔÔ¤ÀÀÍ¼
 
     public Camera[] cameras;
     
@@ -60,9 +60,9 @@ public class UIControll : MonoBehaviour
     }
     public void Backtoshitu()
     {
-      ShituModel.SetActive(true);
+        ShituModel.SetActive(true);
         Modeltimu.SetActive(false);
-       
+        
     }
     public void BacktoModeltimu()
     {
@@ -99,16 +99,25 @@ public class UIControll : MonoBehaviour
         //ShengchengModel.SetActive(true);
         cameras[1].gameObject.SetActive(true);
         cameras[2].gameObject.SetActive(true);
+        cameras[1].rect = new Rect(0.509f, 0.05f, 0.47f, 0.9f);
+        cameras[2].rect = new Rect(0.021f, 0.05f, 0.47f, 0.9f);
     }
     public void Modelzuoti()
     {
         ShituModel.SetActive(false);
-        Modeltimu .SetActive(true);
-        TimelineManager.instance.PlayTimeline(0);
+        
+        viewer.SetActive(false);
         cameras[1].gameObject.SetActive(false);
         cameras[2].DORect(new Rect(0, 0, 1, 1), 1f);
-        CameraController.instance.check = true;
-        viewer.SetActive(false);
+        
+        TimelineManager.instance.PlayTimeline(0,() => {
+            CameraController.instance.check = true;
+            Modeltimu.SetActive(true);
+            foreach(var image in Modeltimu.gameObject.GetComponentsInChildren<Image>())
+            {
+                image.DOFade(0.8f, 1f);
+            }
+        });
 
     }
     public void ChooseTiku()
@@ -161,9 +170,9 @@ public class UIControll : MonoBehaviour
     }
     public void BackToTuku()
     {
-
         ShituModel.SetActive(false);
         Tuku.SetActive(true);
+        cameras[2].gameObject.SetActive(false);
     }
     public void Checktuzhi()
     {
