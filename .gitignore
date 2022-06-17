@@ -59,3 +59,6 @@ sysinfo.txt
 crashlytics-build.properties
 
 Assets/ZFBrowser/Plugins/l64/zf_cef.so.meta
+Assets/ZFBrowser/Plugins/l64/zf_cef.so
+Assets/ZFBrowser/Plugins/m64/BrowserLib.app/Contents/Frameworks/Chromium Embedded Framework.framework/Chromium Embedded Framework
+Assets/ZFBrowser/Plugins/w64/zf_cef.dll
