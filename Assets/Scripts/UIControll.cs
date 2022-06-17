@@ -104,6 +104,10 @@ public class UIControll : MonoBehaviour
     }
     public void Modelzuoti()
     {
+        foreach(var image in Modeltimu.gameObject.GetComponentsInChildren<Image>())
+        {
+            image.color = new Color(image.color.r,image.color.g,image.color.b,0f);
+        }
         ShituModel.SetActive(false);
         
         viewer.SetActive(false);
