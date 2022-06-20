@@ -10221,19 +10221,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1023420666}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 747552951}
-        m_TargetAssemblyTypeName: UIControll, Assembly-CSharp
-        m_MethodName: Backtoshitu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1023420666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16493,19 +16481,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1616832971}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 747552951}
-        m_TargetAssemblyTypeName: UIControll, Assembly-CSharp
-        m_MethodName: Backtoshitu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1619798804
 GameObject:
   m_ObjectHideFlags: 0
@@ -21035,8 +21011,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 621, y: 388}
-  m_SizeDelta: {x: 264.2299, y: 100}
+  m_AnchoredPosition: {x: 532, y: 388}
+  m_SizeDelta: {x: 351.05, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1994279929
 MonoBehaviour:
@@ -21221,19 +21197,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2000643945}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 747552951}
-        m_TargetAssemblyTypeName: UIControll, Assembly-CSharp
-        m_MethodName: Backtoshitu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2000643945
 MonoBehaviour:
   m_ObjectHideFlags: 0
