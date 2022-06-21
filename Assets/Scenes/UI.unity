@@ -7421,6 +7421,7 @@ MonoBehaviour:
   sanshitu2: {fileID: 2132961815}
   sanshitu3: {fileID: 1015457872}
   viewer: {fileID: 830940961}
+  controller: {fileID: 1163356255}
   cameras:
   - {fileID: 2125706488}
   - {fileID: 1786895807}
