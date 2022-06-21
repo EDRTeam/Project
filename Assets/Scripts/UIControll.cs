@@ -31,7 +31,7 @@ public class UIControll : MonoBehaviour
     //public GameObject Modeltimu;
 
     public GameObject viewer;     //ËõÂÔÔ¤ÀÀÍ¼
-
+    public GameObject controller; //ÉãÏñ»ú²Ù×÷µÄ¿ØÖÆÆ÷
     public Camera[] cameras;
     
 
@@ -113,7 +113,7 @@ public class UIControll : MonoBehaviour
             image.color = new Color(image.color.r,image.color.g,image.color.b,0f);
         }
         ShituModel.SetActive(false);
-        
+        controller.GetComponent<CameraController>().enabled = false;
         viewer.SetActive(false);
         cameras[1].gameObject.SetActive(false);
         cameras[2].DORect(new Rect(0, 0, 1, 1), 1f);
