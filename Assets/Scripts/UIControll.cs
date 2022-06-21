@@ -24,6 +24,10 @@ public class UIControll : MonoBehaviour
     public GameObject Modeltimuanswer;
     public GameObject FreeModel;
     public GameObject StandardModel;
+    public GameObject[] Shitu;
+    public GameObject sanshitu1;
+    public GameObject sanshitu2;
+    public GameObject sanshitu3;
     //public GameObject Modeltimu;
 
     public GameObject viewer;     //Àı¬‘‘§¿¿Õº
@@ -171,6 +175,9 @@ public class UIControll : MonoBehaviour
         StudyModel.SetActive(true);
         Tiku.SetActive(false);
         Tuku.SetActive(false);
+        sanshitu1.SetActive(false);
+        sanshitu2.SetActive(false);
+        sanshitu3.SetActive(false);
     }
     public void BackToTuku()
     {
@@ -203,6 +210,20 @@ public class UIControll : MonoBehaviour
     {
         ShituModel .SetActive(true);
         ShengchengModel.SetActive(false);
+    }
+    public void ToXiti()
+    {
+        cameras[0].gameObject.SetActive(false);
+        cameras[3].gameObject.SetActive(true);
+    }
+    public void LookSanshi()
+    {
+        cameras[0].gameObject.SetActive(true);
+        Shitu[0].SetActive(true);
+        Shitu[1].SetActive(true);
+        Shitu[2].SetActive(true);
+        cameras[3].gameObject.SetActive(false);
+
     }
     // Start is called before the first frame update
     void Start()

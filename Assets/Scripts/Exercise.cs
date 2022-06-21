@@ -49,6 +49,7 @@ public class Exercise : MonoBehaviour
     private int anserint = 0;//已经答过几题
 
     private int isRightNum = 0;//正确题数
+    public string tiku;
 
 
 
@@ -96,7 +97,7 @@ public class Exercise : MonoBehaviour
 
         //读取csv二进制文件  
 
-        TextAsset binAsset = Resources.Load("tk", typeof(TextAsset)) as TextAsset;
+        TextAsset binAsset = Resources.Load(tiku, typeof(TextAsset)) as TextAsset;
 
         //读取每一行的内容  
 
@@ -152,7 +153,7 @@ public class Exercise : MonoBehaviour
 
         }
 
-        GetRandomNum();  //获得随机数
+        //GetRandomNum();  //获得随机数
 
         tipsbtn.SetActive(false);
 
@@ -160,7 +161,7 @@ public class Exercise : MonoBehaviour
 
         indexText.text = "第" + (topicIndex + 1) + "题：";//第几题
 
-        TM_Text.text = ArrayX[randomNum[topicIndex]][1];//题目
+        TM_Text.text = ArrayX[topicIndex][1];//题目
 
         int idx = ArrayX[topicIndex].Length - 3;//有几个选项
 
@@ -168,7 +169,7 @@ public class Exercise : MonoBehaviour
 
         {
 
-            DA_TextList[x].text = ArrayX[randomNum[topicIndex]][x + 2];//选项
+            DA_TextList[x].text = ArrayX[topicIndex][x + 2];//选项
 
         }
 
@@ -186,9 +187,9 @@ public class Exercise : MonoBehaviour
 
             case 0://提示
 
-                int idx = ArrayX[randomNum[topicIndex]].Length - 1;
+                int idx = ArrayX[topicIndex].Length - 1;
 
-                int n = int.Parse(ArrayX[randomNum[topicIndex]][idx]);
+                int n = int.Parse(ArrayX[topicIndex][idx]);
 
                 string nM = "";
 
@@ -290,9 +291,9 @@ public class Exercise : MonoBehaviour
 
             bool isRight;
 
-            int idx = ArrayX[randomNum[topicIndex]].Length - 1;
+            int idx = ArrayX[topicIndex].Length - 1;
 
-            int n = int.Parse(ArrayX[randomNum[topicIndex]][idx]) - 1;
+            int n = int.Parse(ArrayX[topicIndex][idx]) - 1;
 
             if (n == index)
 
@@ -322,7 +323,7 @@ public class Exercise : MonoBehaviour
 
             //正确率计算
 
-            if (isAnserList[randomNum[topicIndex]])
+            if (isAnserList[topicIndex])
 
             {
 
@@ -344,7 +345,7 @@ public class Exercise : MonoBehaviour
 
                 }
 
-                isAnserList[randomNum[topicIndex]] = true;
+                isAnserList[topicIndex] = true;
 
                 TextAccuracy.text = "正确率：" + ((float)isRightNum / anserint * 100).ToString("f2") + "%";
 
@@ -366,34 +367,6 @@ public class Exercise : MonoBehaviour
 
     }
 
-    /*****************获得随机数******************/
-
-    void GetRandomNum()
-
-    {
-
-        HashSet<int> nums = new HashSet<int>();
-
-        System.Random r = new System.Random();
-
-        while (nums.Count != topicMax)
-
-        {
-
-            nums.Add(r.Next(0, topicMax));
-
-        }
-
-        //Debug.Log(topicMax);
-
-        foreach (var item in nums)
-
-        {
-
-            randomNum.Add(item);
-
-        }
-
-    }
+    
 
 }
