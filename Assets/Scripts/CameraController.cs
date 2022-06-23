@@ -134,7 +134,6 @@ public class CameraController : SceneSingleton<CameraController>
     //÷ÿ÷√…„œÒª˙◊¥Ã¨
     public void RecoverTransform(Vector3 offset)
     {
-        
         camera.transform.DOLocalMove(originPosition + offset, 1f);
         camera.transform.DOLocalRotateQuaternion(originQuaternion, 1f);
         camera.DOFieldOfView(originFov,1f);

@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class Instantiate : MonoBehaviour
 {
     public GameObject[] InstantiatePrefab;
-    public Vector3 Pos;
-    public Quaternion Rot;
+    public Transform generatePos;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,12 +18,10 @@ public class Instantiate : MonoBehaviour
     {
         
     }
-    public void Instantiate0()
+
+    public void ModelInstantiate(GameObject prefab)
     {
-        GameObject.Instantiate(InstantiatePrefab[0],Pos,Rot);
-    }
-    public void Instantiate1()
-    {
-        GameObject.Instantiate(InstantiatePrefab[1], Pos, Rot);
+        GameObject fe = GameObject.Instantiate(prefab, generatePos.position, generatePos.rotation);
+        fe.transform.SetParent(generatePos);
     }
 }
