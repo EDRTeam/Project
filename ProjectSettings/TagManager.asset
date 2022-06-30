@@ -4,7 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Anwser
+  - Grass
+  - Stone
+  - Street
   - FreeExp
   - CrossSectionPart
   layers:
@@ -14,7 +16,7 @@ TagManager:
   - 
   - Water
   - UI
-  - ModelViewer
+  - 
   - 
   - 
   - 

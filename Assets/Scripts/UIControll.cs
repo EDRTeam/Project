@@ -68,6 +68,25 @@ public class UIControll : MonoBehaviour
         StudyModel.SetActive(false);
         Tuku.SetActive(true);
     }
+    //被改变的物体
+    public GameObject Yulantuzhi;
+    //需要改变的图片
+    public Sprite YulantuzhiSprit;
+    //加载将要用于修改的图片的路径
+    public Sprite[] TuzhiSprit;
+    //之后调用方便用的变量
+    public int TargetSprit;
+    //选择图纸
+    public void TuzhiBtn0()
+    {
+        TargetSprit = 0;
+        Yulantuzhi.GetComponent<Image>().sprite = TuzhiSprit[TargetSprit];
+    }
+    public void TuzhiBtn1()
+    {
+        TargetSprit = 1;
+        Yulantuzhi.GetComponent<Image>().sprite = TuzhiSprit[TargetSprit];
+    }
     public void Backtoshitu()
     {
         ShituModel.SetActive(true);
@@ -80,8 +99,11 @@ public class UIControll : MonoBehaviour
         Modeltimuanswer.SetActive(false);
 
     }
+    //该页面需要修改的sprit
+    public GameObject Graph;
     public void ChooseShitu()
     {
+        Graph.GetComponent<Image>().sprite = TuzhiSprit[TargetSprit];
         Tuku.SetActive(false);
         Edittimu.SetActive(false);
         ShituModel.SetActive(true);
@@ -125,6 +147,8 @@ public class UIControll : MonoBehaviour
             Destroy(thM.transform.GetChild(i).gameObject);
         }
     }
+    //需要修改的物体
+    public GameObject[] Graph1;
     //生成模型按钮
     public void BuildModel()
     {
@@ -132,11 +156,13 @@ public class UIControll : MonoBehaviour
         //ShengchengModel.SetActive(true);
         cameras[1].gameObject.SetActive(true);
         cameras[2].gameObject.SetActive(true);
+        Graph1[TargetSprit].SetActive(true);
         cameras[1].rect = new Rect(0.509f, 0.05f, 0.47f, 0.9f);
         cameras[2].rect = new Rect(0.021f, 0.05f, 0.47f, 0.9f);
     }
     public void Modelzuoti()
     {
+        Graph1[TargetSprit].SetActive(false);
         foreach(var image in Modeltimu.gameObject.GetComponentsInChildren<Image>())
         {
             image.color = new Color(image.color.r,image.color.g,image.color.b,0f);
