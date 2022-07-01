@@ -351,8 +351,6 @@ public class Exercise : MonoBehaviour
 
             }
 
-
-
             //禁用掉选项
 
             for (int i = 0; i < toggleList.Count; i++)
