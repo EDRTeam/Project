@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ModelHighLight : MonoBehaviour
 {
-    public GameObject cur_Obj;
+    //public GameObject cur_Obj;
 
     // Start is called before the first frame update
     void Start()

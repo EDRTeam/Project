@@ -967,9 +967,9 @@ MonoBehaviour:
   m_Version: 0
   m_Tracks:
   - {fileID: 6570285086676159980}
+  - {fileID: -6402903232489971616}
   - {fileID: -5855908793971714583}
   - {fileID: -3234142848556654064}
-  - {fileID: -6402903232489971616}
   - {fileID: 1278034420622914260}
   - {fileID: 6972603711368056075}
   - {fileID: 376804897231349360}
@@ -2186,7 +2186,7 @@ MonoBehaviour:
     m_Start: 0
     m_ClipIn: 0
     m_Asset: {fileID: -6807268381875550279}
-    m_Duration: 6.333333333333333
+    m_Duration: 6.266666666666667
     m_TimeScale: 1
     m_ParentTrack: {fileID: 8336236500019850820}
     m_EaseInDuration: 0

@@ -39,8 +39,13 @@ public class UIControll : MonoBehaviour
     private GameObject tempThM;  //在三个相机下用于生成三视图的模型
 
     public GameObject CrossPlane;
-    public GameObject CrossPanel;  
+    public GameObject CrossPanel;
 
+    private bool flag_xiti;      //习题部分切换按钮操作
+    //private bool isCallOut;      //呼出或隐藏图纸
+    private Vector3 originScale_Graph;    //UICanvas下的识图模块的图纸初始大小
+    private Vector3 originPos_Graph;      //
+    private Vector3 originScale; //2DCamera下canvas的识图模块图纸
     public void Getin()
     {
         StartScene.SetActive(false);
@@ -147,6 +152,7 @@ public class UIControll : MonoBehaviour
             Destroy(thM.transform.GetChild(i).gameObject);
         }
     }
+
     //需要修改的物体
     public GameObject[] Graph1;
     //生成模型按钮
@@ -157,33 +163,80 @@ public class UIControll : MonoBehaviour
         cameras[1].gameObject.SetActive(true);
         cameras[2].gameObject.SetActive(true);
         Graph1[TargetSprit].SetActive(true);
+        originScale = Graph1[TargetSprit].transform.parent.GetComponent<RectTransform>().localScale;
         cameras[1].rect = new Rect(0.509f, 0.05f, 0.47f, 0.9f);
         cameras[2].rect = new Rect(0.021f, 0.05f, 0.47f, 0.9f);
+        viewer.SetActive(true);
     }
+
     public void Modelzuoti()
     {
-        Graph1[TargetSprit].SetActive(false);
-        foreach(var image in Modeltimu.gameObject.GetComponentsInChildren<Image>())
+        //第一次进入习题
+        if (flag_xiti)
         {
-            image.color = new Color(image.color.r,image.color.g,image.color.b,0f);
-        }
-        ShituModel.SetActive(false);
-        controller.GetComponent<CameraController>().enabled = false;
-        viewer.SetActive(false);
-        cameras[1].gameObject.SetActive(false);
-        cameras[2].DORect(new Rect(0, 0, 1, 1), 1f);
-        
-        //回调 动画播放完成显示题目
-        TimelineManager.instance.PlayTimeline(0,() => {
-            CameraController.instance.check = true;
+            Vector2 position = new Vector2(0, -430);
+            Graph1[TargetSprit].transform.parent.gameObject.GetComponent<RectTransform>().DOScale(Vector3.zero * 0.01f,0.5f);
+            Graph1[TargetSprit].transform.parent.gameObject.GetComponent<RectTransform>().DOAnchorPos(position, 0.5f);
+            //isCallOut = false;
+            Xiti_SetOrigin();
+
+            ShituModel.SetActive(false);
+            controller.GetComponent<CameraController>().enabled = false;
+            viewer.SetActive(false);
+            cameras[1].DORect(new Rect(0, 0, 1, 1), 0.5f);
+            cameras[2].DORect(new Rect(0.06f, 0.08f, 0.86f, 0.82f), 1f);
             Modeltimu.SetActive(true);
-            foreach(var image in Modeltimu.gameObject.GetComponentsInChildren<Image>())
-            {
-                image.DOFade(0.8f, 1f);
-            }
-        });
+            Modeltimu.GetComponent<Image>().DOFade(0.8f, 0.6f);
+
+            //回调 动画播放完成显示题目
+            TimelineManager.instance.PlayTimeline(0, () => {
+                CameraController.instance.check = true;
+                Xiti_CallOut();
+                cameras[2].gameObject.SetActive(false);
+                flag_xiti = false;
+            });
+        }
+        else        //开始做题之后开关习题界面
+        {
+                Xiti_SetOrigin();
+                ShituModel.SetActive(false);
+                viewer.SetActive(false);
+                Modeltimu.SetActive(true);
+                Modeltimu.GetComponent<Image>().DOFade(0.8f, 0.6f);
+                Xiti_CallOut();
+                Vector2 position = new Vector2(0, -430);
+                Graph1[TargetSprit].transform.parent.gameObject.GetComponent<RectTransform>().DOScale(Vector3.zero * 0.01f, 0.5f);
+                Graph1[TargetSprit].transform.parent.gameObject.GetComponent<RectTransform>().DOAnchorPos(position, 0.5f);
+        }
 
     }
+    
+    //让习题界面所有UI透明度为0
+    private void Xiti_SetOrigin()
+    {
+        foreach (var image in Modeltimu.gameObject.GetComponentsInChildren<Image>())
+        {
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 0f);
+        }
+        foreach (var text in Modeltimu.gameObject.GetComponentsInChildren<Text>())
+        {
+            text.color = new Color(text.color.r, text.color.g, text.color.b, 0f);
+        }
+    }
+    //做习题界面渐出动画
+    private void Xiti_CallOut()
+    {
+        Modeltimu.SetActive(true);
+        foreach (var image in Modeltimu.gameObject.GetComponentsInChildren<Image>())
+        {
+            image.DOFade(0.8f, 1f);
+        }
+        foreach (var text in Modeltimu.gameObject.GetComponentsInChildren<Text>())
+        {
+            text.DOFade(1f, 1f);
+        }
+    }
+
     public void ChooseTiku()
     {
         Tiku.SetActive(true);
@@ -234,20 +287,31 @@ public class UIControll : MonoBehaviour
         ThreeView.SetActive(false);
     }
 
-    //从自主学习习题返回
-    public void BackToTuku()
+    //从习题到识图
+    public void BackToXiti()
+    {
+
+        //出图纸
+        Vector2 position = new Vector3(0, 0);
+        Graph1[TargetSprit].transform.parent.gameObject.GetComponent<RectTransform>().DOScale(originScale, 0.5f);
+        Graph1[TargetSprit].transform.parent.gameObject.GetComponent<RectTransform>().DOAnchorPos(position, 0.5f);
+
+        //设置做题ui透明度为0
+        Xiti_SetOrigin();
+        Modeltimu.SetActive(false);
+    }
+
+    //从识图回到图库列表
+    public void ShituToToku()
     {
         ShituModel.SetActive(false);
         Tuku.SetActive(true);
-        cameras[2].gameObject.SetActive(false);
-
-        //设置做题ui透明度为0
-        foreach (var image in Modeltimu.gameObject.GetComponentsInChildren<Image>())
-        {
-            image.color = new Color(image.color.r, image.color.g, image.color.b, 0f);
-        }
-        Modeltimu.SetActive(false);
+        InitBMCamera();
+        flag_xiti = true;
+        Graph.transform.parent.transform.localScale = originScale_Graph;
+        Graph.transform.parent.localPosition = new Vector3(0, 0,-590);
     }
+
     public void Checktuzhi()
     {
        
@@ -274,6 +338,8 @@ public class UIControll : MonoBehaviour
         ShituModel .SetActive(true);
         ShengchengModel.SetActive(false);
     }
+
+    //到实验模式
     public void ToXiti()
     {
         cameras[0].gameObject.SetActive(false);
@@ -343,11 +409,24 @@ public class UIControll : MonoBehaviour
         thM.SetActive(true);
     }
 
+    //初始化两个分屏摄像机的参数
+    private void InitBMCamera()
+    {
+        cameras[1].rect = new Rect(0.509f, 0.05f, 0.47f, 0.9f);
+        cameras[2].rect = new Rect(0.021f, 0.05f, 0.47f, 0.9f);
+        cameras[1].gameObject.SetActive(false);
+        cameras[2].gameObject.SetActive(false);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         lastPos = cameras[3].gameObject.transform.position;
         lastRot = cameras[3].gameObject.transform.rotation;
+
+        flag_xiti = true;
+        InitBMCamera();
+        originScale_Graph = Graph.transform.parent.localScale;
     }
 
     // Update is called once per frame
