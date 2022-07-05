@@ -5,21 +5,20 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class Instantiate : MonoBehaviour
+public class InstantiateCommand : Command
 {
-    public GameObject Target;
-    public Vector3 Pos;
-    public Quaternion Rot;
-    //要生成的物体
-    public GameObject prefab;
-    //拖拽的物体
-    public GameObject dragObj;
-    //是否正在拖拽
-    public bool isDrag;
+    private GameObject prefab;
+    private GameObject fep;
+    private GameObject instance;
+
+    public InstantiateCommand(GameObject prefab,GameObject fep)
+    {
+        this.prefab = prefab;
+        this.fep = fep;
+    }
     void Start()
     {
-        Pos = Target.gameObject.transform.position;
-        Rot = Target.gameObject.transform.rotation;
+
     }
     // Update is called once per frame
     void Update()
@@ -50,7 +49,7 @@ public class Instantiate : MonoBehaviour
                 dragObj = null;
             }
         }*/
-    }     
+    }
     /*
     //按下鼠标时开始生成实体预制件
     public void OnPointerDown(PointerEventData eventData)
@@ -58,17 +57,22 @@ public class Instantiate : MonoBehaviour
         isDrag = true;
         dragObj = Instantiate(prefab);
     }*/
-    public void InstantiateL()
+
+    public override void Execute()
     {
-        GameObject.Instantiate(prefab, Pos, Rot);
+        base.Execute();
+        instance = GameObject.Instantiate(prefab, fep.transform);
+        instance.transform.localPosition = Vector3.zero;
     }
-    public GameObject Cube;
-    public GameObject Sphere;
-    public void Cube1()
+
+    public override void Undo()
     {
-        Cube.gameObject.SetActive(true);
+        base.Undo();
+        DestroyImmediate(instance);
     }
-    public void Sphere1(){
-        Sphere.gameObject.SetActive(true);
+    public override string ToString()
+    {
+        string s = prefab.ToString();
+        return s;
     }
 }

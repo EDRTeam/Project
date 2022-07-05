@@ -69,7 +69,7 @@ public class ModelHighLight : MonoBehaviour
         Vector3 screenNear = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane);
 
         Vector3 far = Camera.main.ScreenToWorldPoint(screenFar);
-        Vector3 near = Camera.main.ScreenToWorldPoint(screenNear);
+        Vector3 near = Camera.main.ScreenToWorldPoint(screenNear); 
 
         RaycastHit hit;
         Physics.Raycast(near, far - near, out hit);
