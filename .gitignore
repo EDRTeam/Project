@@ -64,3 +64,4 @@ Assets/ZFBrowser/Plugins/m64/BrowserLib.app/Contents/Frameworks/Chromium Embedde
 Assets/ZFBrowser/Plugins/w64/zf_cef.dll
 Assets/Models/公路/背景/AM223_34.fbx
 Assets/Models/公路/背景/AM223_36.fbx
+Assets/Scripts/Command.cs.meta
