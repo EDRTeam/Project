@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 2
-  m_Shader: {fileID: -6465566751694194690, guid: a8f52e5d3425f2f4cbb1a5af11092d51, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: c6ee86529a5166a41948deeff07b72be, type: 3}
   m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -32,18 +32,6 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_37e510f1c3464f2f82da7b66fdfb8b97:
-        m_Texture: {fileID: 2800000, guid: 9ac740577f9c6fa4b8bf5c2de530fad2, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_7d9cd8acc649421c8f08489253813ea5:
-        m_Texture: {fileID: 2800000, guid: cca484a6633282e488ab519d9b413a90, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_af0b1b77e3584f78b5c34c2c5e70a38c:
-        m_Texture: {fileID: 2800000, guid: 7af792248a69ef64191bdd1cca5d2025, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: 9ac740577f9c6fa4b8bf5c2de530fad2, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -113,10 +101,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Boolean_77b88a0323eb4705b6cda2c0d089a844: 0
     - Vector1_47e42169e03a4a8e9a4bc0cdb86fd8fe: 0.5
-    - Vector1_72c12448e8cc402ab9476014e3ec8dc4: 0
-    - Vector1_a5a539c21a054441a9ab549478adf380: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -147,11 +132,6 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_b79bdab3448a4331a9ee819379fc22ab: {r: 0.59607846, g: 0.59607846, b: 0.59607846, a: 0}
-    - Color_b8e473e718c645d0ad947bbbcc6accfa: {r: 1, g: 0, b: 0, a: 0}
-    - Vector2_93b92afa10784971b17331b97efd9ca2: {r: 2.5, g: 0, b: 0, a: 0}
-    - Vector3_01c345c27275487b9a665343a50d7bc4: {r: 17.81, g: 0, b: 0, a: 0}
-    - Vector3_ae6a45e627a2414ebd54a5b573ad5782: {r: 1, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 0, b: 0, a: 1}
