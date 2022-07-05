@@ -8,10 +8,6 @@ public class ModelChange : SceneSingleton<ModelChange>
     public GameObject Brush;//要操作的副物体
     private bool getB;
 
-    private bool mcI;
-    private bool mcU;
-    private bool mcS;
-
     GameObject newModle;//操作后的模型
     CSG csgModle;
 
@@ -33,7 +29,6 @@ public class ModelChange : SceneSingleton<ModelChange>
         Target = null;
         Brush = null;
         getB = true;
-        mcU = true;
     }
     //求差集
     public void getSubtract()
@@ -41,7 +36,6 @@ public class ModelChange : SceneSingleton<ModelChange>
         Target = null;
         Brush = null;
         getB = true;
-        mcS = true;
     }
     //求交集
     public void getIntersection()
@@ -49,8 +43,6 @@ public class ModelChange : SceneSingleton<ModelChange>
         Target = null;
         Brush = null;
         getB = true;
-        mcI = true;
-        
     }
 
 
@@ -59,33 +51,27 @@ public class ModelChange : SceneSingleton<ModelChange>
     //点击按钮后点击选取目标
     void getTarget()
     {
-        
-        if (getB)
+
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
+            RaycastHit hit = CastRay();//创建屏幕发射射线
+            if (Target == null)
             {
-                RaycastHit hit = CastRay();//创建屏幕发射射线
-                if (Target == null)
+                if (hit.collider != null)
                 {
-                    if (hit.collider != null)
-                    {
-                        Target = hit.collider.gameObject;
-                    }
+                    Target = hit.collider.gameObject;
                 }
-                else if (Brush == null)
+            }
+            else if (Brush == null)
+            {
+                if (hit.collider != null && hit.collider.gameObject != Target)
                 {
-                    if (hit.collider != null && hit.collider.gameObject != Target)
-                    {
-                        Brush = hit.collider.gameObject;
-                    }
+                    Brush = hit.collider.gameObject;
                 }
-                if (Target != null && Brush != null)
-                {
-                    getB = false;
-                    mcI = false;
-                    mcU = false;
-                    mcS = false;
-                }
+            }
+            if (Target != null && Brush != null)
+            {
+                getB = false;
             }
         }
     }
@@ -121,17 +107,19 @@ public class ModelChange : SceneSingleton<ModelChange>
 
     void Update()
     {
+        /*
         if (mcS)
         {
             getTarget();
-            /* CSG.EPSILON = 1e-5f;
+             CSG.EPSILON = 1e-5f;
              csgModle = getCsg(CSG.Operation.Subtract);//求差集的结果
-             CreateNewObj();*/
+             CreateNewObj();
         }
         else if (mcI)
         {
             getTarget();
 
+            
             CSG.EPSILON = 1e-5f;
             csgModle = getCsg(CSG.Operation.Intersection);//求交集的结果
             CreateNewObj();
@@ -139,11 +127,16 @@ public class ModelChange : SceneSingleton<ModelChange>
         else if (mcU)
         {
             getTarget();
+            
             CSG.EPSILON = 1e-5f;
-            csgModle = getCsg(CSG.Operation.Union);//求交集的结果
+            csgModle = getCsg(CSG.Operation.Union);//求并集的结果
             CreateNewObj();
+        }*/
+
+        if (getB)
+        {
+            getTarget();
         }
-        
     }
 
     void CreateNewObj()
@@ -188,7 +181,7 @@ public class ModelChange : SceneSingleton<ModelChange>
         {
             return;
         }
-     
+
         foreach (var c in m_UndoStack)
         {
             Debug.Log("撤销命令：" + c.ToString());

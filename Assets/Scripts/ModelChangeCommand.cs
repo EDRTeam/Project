@@ -57,6 +57,22 @@ public class ModelChangeCommand : Command
         csg.keepSubmeshes = true; // 保持原始的网格和材质
         return csg;
     }
+
+    public override void Undo()
+    {
+        Debug.Log("1");
+        Debug.Log(this.ToString());
+        base.Undo();
+        _Target.SetActive(true);
+        _Brush.SetActive(true);
+        //var brush = Instantiate(_BrushInf, _BrushInf.transform.parent);
+        Destroy(newModle);
+    }
+    public override string ToString()
+    {
+        string s = _Target.ToString() + "/" + _Brush.ToString();
+        return s;
+    }
 }
 
 public sealed class SubtractCommand : ModelChangeCommand
@@ -76,19 +92,60 @@ public sealed class SubtractCommand : ModelChangeCommand
     }
 
     public override void Undo()
-    {
+    {/*
         Debug.Log("1");
         Debug.Log(this.ToString());
         base.Undo();
         _Target.SetActive(true);
         _Brush.SetActive(true);
         //var brush = Instantiate(_BrushInf, _BrushInf.transform.parent);
-        Destroy(newModle);
+        Destroy(newModle);*/
     }
 
-    public override string ToString()
+
+}
+
+public sealed class UnionCommand : ModelChangeCommand
+{
+    public UnionCommand(GameObject target, GameObject brush) : base(target, brush)
     {
-        string s = _Target.ToString() + "/" + _Brush.ToString();
-        return s;
+
     }
+
+    public override void Execute()
+    {
+        base.Execute();
+        CSG.EPSILON = 1e-5f;
+        csgModle = getCsg(CSG.Operation.Union);//求并集的结果
+        CreateNewObj();
+    }
+
+    public override void Undo()
+    {
+        /*
+        Debug.Log("1");
+        Debug.Log(this.ToString());
+        base.Undo();
+        _Target.SetActive(true);
+        _Brush.SetActive(true);
+        //var brush = Instantiate(_BrushInf, _BrushInf.transform.parent);
+        Destroy(newModle);*/
+    }
+}
+
+public sealed class IntersectionCommand : ModelChangeCommand
+{
+    public IntersectionCommand(GameObject target, GameObject brush) : base(target, brush)
+    {
+
+    }
+
+    public override void Execute()
+    {
+        base.Execute();
+        CSG.EPSILON = 1e-5f;
+        csgModle = getCsg(CSG.Operation.Intersection);//求交集的结果
+        CreateNewObj();
+    }
+
 }
