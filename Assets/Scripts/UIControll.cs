@@ -239,7 +239,12 @@ public class UIControll : MonoBehaviour
             text.DOFade(1f, 1f);
         }
     }
-
+    public void Xiti_DongHua()
+    {
+        TimelineManager.instance.PlayTimeline(1, () => {
+            cameras[2].gameObject.SetActive(false);
+        });
+    }
     public void ChooseTiku()
     {
         Tiku.SetActive(true);
