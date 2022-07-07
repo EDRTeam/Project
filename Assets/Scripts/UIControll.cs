@@ -167,6 +167,9 @@ public class UIControll : MonoBehaviour
         cameras[1].rect = new Rect(0.509f, 0.05f, 0.47f, 0.9f);
         cameras[2].rect = new Rect(0.021f, 0.05f, 0.47f, 0.9f);
         viewer.SetActive(true);
+        TimelineManager.instance.PlayTimeline(0, () => {
+            
+        });
     }
 
     public void Modelzuoti()
@@ -189,7 +192,7 @@ public class UIControll : MonoBehaviour
             Modeltimu.GetComponent<Image>().DOFade(0.8f, 0.6f);
 
             //回调 动画播放完成显示题目
-            TimelineManager.instance.PlayTimeline(0, () => {
+            TimelineManager.instance.PlayTimeline(1, () => {
                 CameraController.instance.check = true;
                 Xiti_CallOut();
                 cameras[2].gameObject.SetActive(false);

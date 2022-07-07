@@ -23,4 +23,9 @@ public class Command : MonoBehaviour
     public virtual void Execute() { }
     //³·ÏúÃüÁî
     public virtual void Undo() { }
+
+    public virtual void Redo() { }
+
+    public virtual bool CheckCommand() { return true; }
+    public virtual void DestroyModel() { }
 }

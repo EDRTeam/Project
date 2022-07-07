@@ -18,3 +18,4 @@ public class SceneSingleton<T> : MonoBehaviour where T: SceneSingleton<T>
     }
 
 }
+

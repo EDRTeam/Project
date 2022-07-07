@@ -35,6 +35,9 @@ public class ModelChangeCommand : Command
             newModle.name = "newModle";
             newModle.transform.SetParent(_Target.transform.parent);
             newModle.AddComponent<BoxCollider>();
+            newModle.AddComponent<Outline>();
+            newModle.GetComponent<Outline>().OutlineWidth = 8f;
+            newModle.GetComponent<Outline>().enabled = false;
             _Target.SetActive(false);
             _Brush.SetActive(false);
             //DestroyImmediate(_Target);
@@ -60,14 +63,42 @@ public class ModelChangeCommand : Command
 
     public override void Undo()
     {
-        Debug.Log("1");
-        Debug.Log(this.ToString());
+        //Debug.Log("1");
+        //Debug.Log(this.ToString());
         base.Undo();
-        _Target.SetActive(true);
-        _Brush.SetActive(true);
-        //var brush = Instantiate(_BrushInf, _BrushInf.transform.parent);
-        Destroy(newModle);
+        if (_Target != null)
+        {
+            _Target.SetActive(true);
+        }
+        if (_Brush != null)
+        {
+            _Brush.SetActive(true);
+        }
+        if (newModle != null)
+        {
+            newModle.SetActive(false);
+        }
+             
     }
+
+    public override void Redo()
+    {
+        base.Redo();
+        if (_Target != null)
+        {
+            _Target.SetActive(false);
+        }
+        if (_Brush != null)
+        {
+            _Brush.SetActive(false);
+        }
+        if (newModle != null)
+        {
+            newModle.SetActive(true);
+        }
+
+    }
+
     public override string ToString()
     {
         string s = _Target.ToString() + "/" + _Brush.ToString();
@@ -90,19 +121,6 @@ public sealed class SubtractCommand : ModelChangeCommand
         csgModle = getCsg(CSG.Operation.Subtract);//求差集的结果
         CreateNewObj();
     }
-
-    public override void Undo()
-    {/*
-        Debug.Log("1");
-        Debug.Log(this.ToString());
-        base.Undo();
-        _Target.SetActive(true);
-        _Brush.SetActive(true);
-        //var brush = Instantiate(_BrushInf, _BrushInf.transform.parent);
-        Destroy(newModle);*/
-    }
-
-
 }
 
 public sealed class UnionCommand : ModelChangeCommand
@@ -118,18 +136,6 @@ public sealed class UnionCommand : ModelChangeCommand
         CSG.EPSILON = 1e-5f;
         csgModle = getCsg(CSG.Operation.Union);//求并集的结果
         CreateNewObj();
-    }
-
-    public override void Undo()
-    {
-        /*
-        Debug.Log("1");
-        Debug.Log(this.ToString());
-        base.Undo();
-        _Target.SetActive(true);
-        _Brush.SetActive(true);
-        //var brush = Instantiate(_BrushInf, _BrushInf.transform.parent);
-        Destroy(newModle);*/
     }
 }
 
@@ -147,5 +153,5 @@ public sealed class IntersectionCommand : ModelChangeCommand
         csgModle = getCsg(CSG.Operation.Intersection);//求交集的结果
         CreateNewObj();
     }
-
 }
+

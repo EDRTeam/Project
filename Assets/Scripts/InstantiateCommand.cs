@@ -50,13 +50,6 @@ public class InstantiateCommand : Command
             }
         }*/
     }
-    /*
-    //按下鼠标时开始生成实体预制件
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        isDrag = true;
-        dragObj = Instantiate(prefab);
-    }*/
 
     public override void Execute()
     {
@@ -68,8 +61,31 @@ public class InstantiateCommand : Command
     public override void Undo()
     {
         base.Undo();
+        instance.SetActive(false);
+    }
+
+    public override void Redo()
+    {
+        base.Redo();
+        
+        instance.SetActive(true);
+    }
+
+    public override bool CheckCommand()
+    {
+        if (instance == null)
+        {
+            //ModelChange.instance.M_RedoList.Remove(this);
+            Destroy(this);
+            return false;
+        }
+        return base.CheckCommand();
+    }
+    public override void DestroyModel()
+    {
         DestroyImmediate(instance);
     }
+
     public override string ToString()
     {
         string s = prefab.ToString();

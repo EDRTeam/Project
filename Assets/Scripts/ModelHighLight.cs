@@ -62,20 +62,6 @@ public class ModelHighLight : MonoBehaviour
         }*/
     }
 
-    private RaycastHit CastRay()
-    {
-        //将射线长度限制在摄像机内
-        Vector3 screenFar = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.farClipPlane);
-        Vector3 screenNear = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane);
-
-        Vector3 far = Camera.main.ScreenToWorldPoint(screenFar);
-        Vector3 near = Camera.main.ScreenToWorldPoint(screenNear); 
-
-        RaycastHit hit;
-        Physics.Raycast(near, far - near, out hit);
-        return hit;
-    }
-
     public void HighLightOn()
     {
         gameObject.GetComponent<MeshRenderer>().materials[0].SetFloat("_Emission", 1);
