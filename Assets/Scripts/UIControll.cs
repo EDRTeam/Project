@@ -263,7 +263,7 @@ public class UIControll : MonoBehaviour
     public void ChooseEdit()
     {
         ChooseScene.SetActive(false);
-        ShituModel.SetActive(true);
+        Tuku.SetActive(true);
         
         Edittimu.SetActive(true);
 
