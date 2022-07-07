@@ -27,6 +27,8 @@ public class UIControll : MonoBehaviour
     public GameObject ThreeView;
     //public GameObject Modeltimu;
 
+    private bool isBianji = false;   //判断是进入编辑模式还是不是  用于后面返回按钮判断
+
     public GameObject viewer;     //缩略预览图
     public GameObject controller; //摄像机操作的控制器
     public Camera[] cameras;
@@ -46,6 +48,10 @@ public class UIControll : MonoBehaviour
     private Vector3 originScale_Graph;    //UICanvas下的识图模块的图纸初始大小
     private Vector3 originPos_Graph;      //
     private Vector3 originScale; //2DCamera下canvas的识图模块图纸
+
+    public Button[] buttons;        //存储一些按钮  让其在特定工作完成之后可再点击
+
+    public Transform[] trans_modelCameraOrigin;//存放不同脚本看模型摄像机的起始状态信息
     public void Getin()
     {
         StartScene.SetActive(false);
@@ -158,17 +164,28 @@ public class UIControll : MonoBehaviour
     //生成模型按钮
     public void BuildModel()
     {
+
         ShituModel.SetActive(false);
         //ShengchengModel.SetActive(true);
-        cameras[1].gameObject.SetActive(true);
-        cameras[2].gameObject.SetActive(true);
-        Graph1[TargetSprit].SetActive(true);
-        originScale = Graph1[TargetSprit].transform.parent.GetComponent<RectTransform>().localScale;
+
+        //设置看模型的摄像机的初始位置
+        cameras[2].transform.position = trans_modelCameraOrigin[TargetSprit].position;
+        cameras[2].transform.rotation = trans_modelCameraOrigin[TargetSprit].rotation;
         cameras[1].rect = new Rect(0.509f, 0.05f, 0.47f, 0.9f);
         cameras[2].rect = new Rect(0.021f, 0.05f, 0.47f, 0.9f);
+        cameras[1].gameObject.SetActive(true);
+        cameras[2].gameObject.SetActive(true);
+
+        Graph1[TargetSprit].SetActive(true);
+
+        //记录图纸最初大小
+        originScale = Graph1[TargetSprit].transform.parent.GetComponent<RectTransform>().localScale;
+
         viewer.SetActive(true);
-        TimelineManager.instance.PlayTimeline(0, () => {
-            
+        //播放生成模型的动画
+        TimelineManager.instance.PlayTimeline(0, ()=>{
+            //播放完生成模型动画让习题按钮可点击
+            buttons[0].enabled = true;
         });
     }
 
@@ -201,15 +218,16 @@ public class UIControll : MonoBehaviour
         }
         else        //开始做题之后开关习题界面
         {
-                Xiti_SetOrigin();
-                ShituModel.SetActive(false);
-                viewer.SetActive(false);
-                Modeltimu.SetActive(true);
-                Modeltimu.GetComponent<Image>().DOFade(0.8f, 0.6f);
-                Xiti_CallOut();
-                Vector2 position = new Vector2(0, -430);
-                Graph1[TargetSprit].transform.parent.gameObject.GetComponent<RectTransform>().DOScale(Vector3.zero * 0.01f, 0.5f);
-                Graph1[TargetSprit].transform.parent.gameObject.GetComponent<RectTransform>().DOAnchorPos(position, 0.5f);
+            Xiti_SetOrigin();
+            ShituModel.SetActive(false);
+            viewer.SetActive(false);
+            Modeltimu.SetActive(true);
+            Modeltimu.GetComponent<Image>().DOFade(0.8f, 0.6f);
+            Xiti_CallOut();
+            Vector2 position = new Vector2(0, -430);
+            Graph1[TargetSprit].transform.parent.gameObject.GetComponent<RectTransform>().DOScale(Vector3.zero * 0.01f, 0.5f);
+            Graph1[TargetSprit].transform.parent.gameObject.GetComponent<RectTransform>().DOAnchorPos(position, 0.5f);
+
         }
 
     }
@@ -239,10 +257,13 @@ public class UIControll : MonoBehaviour
             text.DOFade(1f, 1f);
         }
     }
+
     public void Xiti_DongHua()
     {
         TimelineManager.instance.PlayTimeline(1, () => {
             cameras[2].gameObject.SetActive(false);
+            //播放完脚本需求动画之后可再点击
+            buttons[1].enabled = true;
         });
     }
     public void ChooseTiku()
@@ -266,7 +287,7 @@ public class UIControll : MonoBehaviour
         Tuku.SetActive(true);
         
         Edittimu.SetActive(true);
-
+        isBianji = true;
     }
     public void Exit()
     {
@@ -288,17 +309,25 @@ public class UIControll : MonoBehaviour
     }
     public void BackToStudy()
     {
-
-        StudyModel.SetActive(true);
+        //判断是从编辑模式返回还是从教学模式返回
+        if (!isBianji)
+        {
+            StudyModel.SetActive(true);
+        }
+        else
+        {
+            ChooseScene.SetActive(true);
+            isBianji = false;
+        }
         Tiku.SetActive(false);
         Tuku.SetActive(false);
         ThreeView.SetActive(false);
+
     }
 
     //从习题到识图
     public void BackToXiti()
     {
-
         //出图纸
         Vector2 position = new Vector3(0, 0);
         Graph1[TargetSprit].transform.parent.gameObject.GetComponent<RectTransform>().DOScale(originScale, 0.5f);
@@ -315,6 +344,7 @@ public class UIControll : MonoBehaviour
         ShituModel.SetActive(false);
         Tuku.SetActive(true);
         InitBMCamera();
+        //判断重新选择图纸 进入图纸学习
         flag_xiti = true;
         Graph.transform.parent.transform.localScale = originScale_Graph;
         Graph.transform.parent.localPosition = new Vector3(0, 0,-590);
@@ -353,6 +383,7 @@ public class UIControll : MonoBehaviour
         cameras[0].gameObject.SetActive(false);
         cameras[3].gameObject.SetActive(true);
     }
+
     public void LookSanshi()
     {
         lastPos = cameras[3].gameObject.transform.position;
