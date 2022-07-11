@@ -4,6 +4,7 @@ using UnityEngine;
 public class ModelChange : SceneSingleton<ModelChange>
 {
     public GameObject freeExpPos;//自由拼搭父对象
+    public GameObject groundPlane; //地面
 
     [SerializeField]
     private GameObject Target;//要操作的目标物体
@@ -42,6 +43,9 @@ public class ModelChange : SceneSingleton<ModelChange>
         }
     }
 
+    //交并差面板
+    public GameObject mcPanel;
+
     void Start()
     {
         getB = false;
@@ -52,7 +56,6 @@ public class ModelChange : SceneSingleton<ModelChange>
 
     public void GetTarget()
     {
-        CleanList();
         DisOutline();
         Target = null;
         Brush = null;
@@ -97,6 +100,8 @@ public class ModelChange : SceneSingleton<ModelChange>
             {
                 getB = f;
                 Drag.instance.enabled = true;
+                mcPanel.SetActive(true);
+                CleanList();
             }
         }
     }
@@ -107,8 +112,6 @@ public class ModelChange : SceneSingleton<ModelChange>
         {
             GetTarget(false);
         }
-
-
     }
 
     //实例化
@@ -119,7 +122,7 @@ public class ModelChange : SceneSingleton<ModelChange>
         command.Execute();
         //m_UndoStack.Push(command);
         m_UndoList.Add(command);
-        Debug.Log("实例化：" + command.ToString());
+        //Debug.Log("实例化：" + command.ToString());
     }
 
     //求差
@@ -130,7 +133,7 @@ public class ModelChange : SceneSingleton<ModelChange>
         m_UndoList.Add(command);
         //m_UndoStack.Push(command);
         command.Execute();
-        Debug.Log("求差：" + command.ToString());
+        //Debug.Log("求差：" + command.ToString());
     }
 
     //求并
@@ -141,7 +144,7 @@ public class ModelChange : SceneSingleton<ModelChange>
         m_UndoList.Add(command);
         //m_UndoStack.Push(command);
         command.Execute();
-        Debug.Log("求并：" + command.ToString());
+        //Debug.Log("求并：" + command.ToString());
     }
 
     //求交
@@ -152,7 +155,7 @@ public class ModelChange : SceneSingleton<ModelChange>
         m_UndoList.Add(command);
         //m_UndoStack.Push(command);
         command.Execute();
-        Debug.Log("求交：" + command.ToString());
+        //Debug.Log("求交：" + command.ToString());
     }
 
     //取消所有描边
@@ -175,11 +178,11 @@ public class ModelChange : SceneSingleton<ModelChange>
         {
             return;
         }
-        /*
-        foreach (var c in m_UndoStack)
-        {
-            Debug.Log("撤销命令列表：" + c.ToString());
-        }*/
+        
+        //foreach (var c in m_UndoList)
+        //{
+        //    Debug.Log("撤销命令列表：" + c.ToString());
+        //}
         //Debug.Log("---------");
 
         Command command = m_UndoList[m_UndoList.Count - 1];

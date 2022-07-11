@@ -56,6 +56,7 @@ public class InstantiateCommand : Command
         base.Execute();
         instance = GameObject.Instantiate(prefab, fep.transform);
         instance.transform.localPosition = Vector3.zero;
+        instance.transform.Translate(Vector3.up * 0.5f * instance.transform.localScale.y, Space.Self);
     }
 
     public override void Undo()

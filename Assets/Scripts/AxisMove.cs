@@ -5,12 +5,22 @@ using UnityEngine;
 public class AxisMove : SceneSingleton<AxisMove>
 {
     public bool check = false;//切换检测
+    public RotationController rc;
+    public ScaleController sc;
 
     public Transform axis;  //坐标轴模型
     private Material selectMat;
     [SerializeField]
     private Transform target;  //要移动的物体
+    public Transform Target
+    {
+        get
+        {
+            return target;
+        }
+    }
     public Camera axisCamera; //只渲染坐标轴的摄像机
+    public Camera fepCamera;
 
     public float MOVE_SPEED = 0.03F;
 
@@ -20,6 +30,9 @@ public class AxisMove : SceneSingleton<AxisMove>
     private Vector3 offset;
     private Vector3 screenPosition;
 
+    public GameObject axisPanel;
+
+    private Command command;
     void Start()
     {
         axis.gameObject.SetActive(false);
@@ -31,7 +44,14 @@ public class AxisMove : SceneSingleton<AxisMove>
         {
             check = !check;
             axis.gameObject.SetActive(false);
+            axisPanel.SetActive(false);
+
             Drag.instance.enabled = true;
+            target = null;
+
+            rc.Init(null);
+            sc.Init(null);
+
             this.enabled = false;
         }
         if (target == null)
@@ -40,17 +60,48 @@ public class AxisMove : SceneSingleton<AxisMove>
         }
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit hit = RayCast.instance.CastRay(axisCamera);//创建屏幕发射射线
-            if (hit.collider != null && target == null)
+            RaycastHit hit = RayCast.instance.CastRay(fepCamera);//创建屏幕发射射线
+
+            if (hit.collider != null)
             {
-                target = hit.collider.gameObject.transform;
-                axis.gameObject.SetActive(true);
-                axis.position = target.position;
-            }else if (hit.collider == null)
+                if (target == null||
+                    (target.gameObject != hit.collider.gameObject && hit.collider.gameObject.layer!=LayerMask.NameToLayer("Axis")))
+                {
+                    target = hit.collider.gameObject.transform;
+                    axis.gameObject.SetActive(true);
+                    axis.position = target.position;
+                }
+            }
+            else
             {
                 axis.gameObject.SetActive(false);
                 target = null;
             }
+            rc.Init(target);
+            sc.Init(target);
+
+
+            //if (hit.collider != null && target == null)
+            //{
+            //    if (target == null)
+            //    {
+            //        target = hit.collider.gameObject.transform;
+            //        axis.gameObject.SetActive(true);
+            //        axis.position = target.position;
+            //    }
+            //    else if(target.gameObject != hit.collider.gameObject)
+            //    {
+            //        target = hit.collider.gameObject.transform;
+            //        axis.position = target.position;
+            //    }
+            //}
+            //else if (hit.collider == null)
+            //{
+            //    axis.gameObject.SetActive(false);
+            //    target = null;
+            //}
+            //rc.Init(target);
+            //sc.Init(target);
         }
         if (target != null)
         {
@@ -69,13 +120,25 @@ public class AxisMove : SceneSingleton<AxisMove>
             //鼠标抬起后初始化数值 
             if (Input.GetMouseButtonUp(0))
             {
+                if (choosedAxis)
+                {
+                    command.Execute();
+                    List<Command> commandList = new List<Command>(1);
+                    if (command.CheckCommand())
+                    {
+                        commandList.Add(command);
+                        ModelChange.instance.M_UndoList = commandList;
+                    }
+                    commandList.Clear();
+                }
                 choosedAxis = false;
                 currentAxis = 0;
                 if (selectMat != null)
                 {
                     selectMat.SetFloat("_IsSelected", 0);
                 }
-                
+                selectMat = null;
+
             }
         }
         
@@ -84,11 +147,11 @@ public class AxisMove : SceneSingleton<AxisMove>
     private void AxisCheck()
     {
         //检测相机是否碰撞了坐标轴
-        Ray ray = axisCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, axisCamera.farClipPlane, 1 << LayerMask.NameToLayer("Axis"))) //只检测Axis这一层
+        RaycastHit hit = RayCast.instance.CastRay(axisCamera, 1 << LayerMask.NameToLayer("Axis"));
+        if (hit.collider!=null) //只检测Axis这一层
         {
-            
+            //Debug.Log("坐标轴:" + hit.collider.name);
+            command = new TransformCommand(target.gameObject);
             choosedAxis = true;
             oldPos = target.position;
             screenPosition = axisCamera.WorldToScreenPoint(oldPos);

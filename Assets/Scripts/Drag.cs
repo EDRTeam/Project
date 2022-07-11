@@ -19,7 +19,7 @@ public class Drag : SceneSingleton<Drag>
     private Vector3 offset;
 
     private bool inDesFlag;
-
+    public GameObject recycleUiLight;
     //private List<Command> commandList;
     private Command command;
     public void Start()
@@ -36,7 +36,13 @@ public class Drag : SceneSingleton<Drag>
         {
             AxisMove.instance.check = !AxisMove.instance.check;
             AxisMove.instance.enabled = true;
+            AxisMove.instance.axisPanel.SetActive(true);
             this.enabled = false;
+        }
+        if (!AxisMove.instance.check)
+        {
+            AxisMove.instance.axisPanel.SetActive(false);
+            AxisMove.instance.enabled = false;
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -71,11 +77,16 @@ public class Drag : SceneSingleton<Drag>
                 {
                     Destroy(currentDrag);
                     inDesFlag = false;
+                    recycleUiLight.SetActive(false);
                 }
                 else
                 {
-                    commandList.Add(command);
-                    ModelChange.instance.M_UndoList = commandList;
+                    if (command.CheckCommand())
+                    {
+                        commandList.Add(command);
+                        ModelChange.instance.M_UndoList = commandList;
+                    }
+                    
                 }
             }
             currentDrag = null;
@@ -95,11 +106,18 @@ public class Drag : SceneSingleton<Drag>
 
     public void InUIDestroy()
     {
-        Debug.Log("in");
+        //Debug.Log("in");
+        if (currentDrag != null)
+        {
+            recycleUiLight.SetActive(true);
+        }
         inDesFlag = true;
     }
     public void OutUIDestroy()
     {
         inDesFlag = false;
+        recycleUiLight.SetActive(false);
     }
+
+
 }

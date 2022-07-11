@@ -17,4 +17,18 @@ public class RayCast : SceneSingleton<RayCast>
         Physics.Raycast(near, far - near, out hit);
         return hit;
     }
+
+    public RaycastHit CastRay(Camera camera, int layerMask)
+    {
+        //将射线长度限制在摄像机内
+        Vector3 screenFar = new Vector3(Input.mousePosition.x, Input.mousePosition.y, camera.farClipPlane);
+        Vector3 screenNear = new Vector3(Input.mousePosition.x, Input.mousePosition.y, camera.nearClipPlane);
+
+        Vector3 far = camera.ScreenToWorldPoint(screenFar);
+        Vector3 near = camera.ScreenToWorldPoint(screenNear);
+
+        RaycastHit hit;
+        Physics.Raycast(near, far - near, out hit, camera.farClipPlane, layerMask);
+        return hit;
+    }
 }
