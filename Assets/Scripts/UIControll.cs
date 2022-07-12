@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class UIControll : MonoBehaviour
-{
+{       
     public GameObject StartScene;
     public GameObject LoginScene;
     public GameObject Zhuce;
@@ -27,7 +27,7 @@ public class UIControll : MonoBehaviour
     public GameObject ThreeView;
     //public GameObject Modeltimu;
 
-    private bool isBianji = false;   //判断是进入编辑模式还是不是  用于后面返回按钮判断
+    public bool isBianji = false;   //判断是进入编辑模式还是不是  用于后面返回按钮判断
 
     public GameObject viewer;     //缩略预览图
     public GameObject controller; //摄像机操作的控制器
@@ -70,6 +70,7 @@ public class UIControll : MonoBehaviour
     }
     public void ChooseStudy()
     {
+        isBianji = false;
         ChooseScene.SetActive(false);
         StudyModel.SetActive(true);
     }
@@ -288,6 +289,7 @@ public class UIControll : MonoBehaviour
         
         Edittimu.SetActive(true);
         isBianji = true;
+        GameObject.Find("UIcontroller").GetComponent<Exercise>().LoadAnswer();
     }
     public void Exit()
     {
@@ -341,6 +343,8 @@ public class UIControll : MonoBehaviour
     //从识图回到图库列表
     public void ShituToToku()
     {
+        GameObject.Find("UIcontroller").GetComponent<Exercise>().Chongzhi();
+        GameObject.Find("UIcontroller").GetComponent<Exercise>().LoadAnswer();
         ShituModel.SetActive(false);
         Tuku.SetActive(true);
         InitBMCamera();
