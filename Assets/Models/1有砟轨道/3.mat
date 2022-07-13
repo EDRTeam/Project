@@ -100,7 +100,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Boolean_77b88a0323eb4705b6cda2c0d089a844: 0
+    - Boolean_77b88a0323eb4705b6cda2c0d089a844: 1
     - Vector1_47e42169e03a4a8e9a4bc0cdb86fd8fe: 0.5
     - Vector1_72c12448e8cc402ab9476014e3ec8dc4: 0
     - Vector1_a5a539c21a054441a9ab549478adf380: 1
@@ -134,8 +134,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_b79bdab3448a4331a9ee819379fc22ab: {r: 0.8235294, g: 0.8235294, b: 0.8235294, a: 0}
-    - Color_b8e473e718c645d0ad947bbbcc6accfa: {r: 1, g: 0, b: 0, a: 0}
+    - Color_b79bdab3448a4331a9ee819379fc22ab: {r: 1, g: 1, b: 1, a: 0}
+    - Color_b8e473e718c645d0ad947bbbcc6accfa: {r: 1, g: 0.099207535, b: 0, a: 0}
     - Vector2_93b92afa10784971b17331b97efd9ca2: {r: 2.5, g: 0, b: 0, a: 0}
     - Vector3_01c345c27275487b9a665343a50d7bc4: {r: 10.71, g: 0, b: 0, a: 0}
     - Vector3_ae6a45e627a2414ebd54a5b573ad5782: {r: 1, g: 0, b: 0, a: 0}

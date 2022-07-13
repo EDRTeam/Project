@@ -11,6 +11,7 @@ TagManager:
   - CrossSectionPart
   - Anwser
   - FreeExpCamera
+  - InputField
   layers:
   - Default
   - TransparentFX

@@ -251,6 +251,10 @@ public class UIControll : MonoBehaviour
         Modeltimu.SetActive(true);
         foreach (var image in Modeltimu.gameObject.GetComponentsInChildren<Image>())
         {
+            if (image.gameObject.tag == "InputField")
+            {
+                continue;
+            }
             image.DOFade(0.8f, 1f);
         }
         foreach (var text in Modeltimu.gameObject.GetComponentsInChildren<Text>())

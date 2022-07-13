@@ -2597,7 +2597,7 @@
     },
     "m_Name": "Emission",
     "m_DefaultReferenceName": "Boolean_77b88a0323eb4705b6cda2c0d089a844",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_Emission",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,

@@ -225,7 +225,7 @@ public class Exercise : MonoBehaviour
                 break;
             case 2://下一题
                 int exercisenum = Instance.GetDicNum(ModleID);
-                if (exercisenum <= topicIndex + 1)
+                if (topicIndex < exercisenum)
                 {
                     topicIndex++;
                     LoadAnswer();
