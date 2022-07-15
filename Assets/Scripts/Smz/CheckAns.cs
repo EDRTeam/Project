@@ -36,9 +36,12 @@ public class CheckAns : MonoBehaviour
         Vector3 Scale = ModelAns[TargetAns].transform.localScale;
         for (int i = 0; i < ch.Length; i++)
         {
-            if (ch[i].name != fep.name)
+            if (ch[i].name != fep.name && ch[i].name != ModelAns[TargetAns].name)
             {
-                Scale = Vector3.Cross(Scale, ch[i].transform.localScale);
+                //Scale = Vector3.Cross(Scale, ch[i].transform.localScale);
+                Scale.x = Scale.x * ch[i].transform.localScale.x;
+                Scale.y = Scale.y * ch[i].transform.localScale.y;
+                Scale.z = Scale.z * ch[i].transform.localScale.z;
             }
         }
         float maxScale;

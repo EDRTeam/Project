@@ -110,6 +110,14 @@ public class UIControll : MonoBehaviour
     public GameObject Graph;
     public void ChooseShitu()
     {
+        if (TargetSprit >= 2)
+        {
+            Graph.GetComponent<RectTransform>().sizeDelta = new Vector2(2400, 1920);
+        }
+        else
+        {
+            Graph.GetComponent<RectTransform>().sizeDelta = new Vector2(3800, 1460);
+        }
         Graph.GetComponent<Image>().sprite = TuzhiSprit[TargetSprit];
         Tuku.SetActive(false);
         Edittimu.SetActive(false);
@@ -211,7 +219,7 @@ public class UIControll : MonoBehaviour
 
         viewer.SetActive(true);
         //播放生成模型的动画
-        TimelineManager.instance.PlayTimeline(0, ()=>{
+        TimelineManager.instance.PlayTimeline(TargetSprit * 2, ()=>{
             //播放完生成模型动画让习题按钮可点击
             buttons[0].enabled = true;
         });
@@ -238,7 +246,7 @@ public class UIControll : MonoBehaviour
             Modeltimu.GetComponent<Image>().DOFade(0.8f, 0.6f);
 
             //回调 动画播放完成显示题目
-            TimelineManager.instance.PlayTimeline(1, () => {
+            TimelineManager.instance.PlayTimeline(TargetSprit * 2 + 1, () => {
                 CameraController.instance.check = true;
                 Xiti_CallOut();
                 cameras[2].gameObject.SetActive(false);
@@ -293,7 +301,7 @@ public class UIControll : MonoBehaviour
 
     public void Xiti_DongHua()
     {
-        TimelineManager.instance.PlayTimeline(1, () => {
+        TimelineManager.instance.PlayTimeline(2 * TargetSprit + 1, () => {
             cameras[2].gameObject.SetActive(false);
             //播放完脚本需求动画之后可再点击
             buttons[1].enabled = true;
