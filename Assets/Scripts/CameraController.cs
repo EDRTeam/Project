@@ -80,11 +80,11 @@ public class CameraController : SceneSingleton<CameraController>
             //camera.transform.RotateAround(center.transform.position, -camera.transform.right, mouse_y * rotateSpeed * Time.deltaTime * 1000);
             camera.transform.RotateAround(center, Vector3.up, mouse_x * rotateSpeed * Time.deltaTime * 1000);
             camera.transform.RotateAround(center, -camera.transform.right, mouse_y * rotateSpeed * Time.deltaTime * 1000);
-            Quaternion temp = camera.transform.rotation;
-            Debug.Log(temp+"1");
-            temp.z = 0;
-            Debug.Log(temp);
-            camera.transform.rotation = temp;
+            //Quaternion temp = camera.transform.rotation;
+            //Debug.Log(temp+"1");
+            //temp.z = 0;
+            //Debug.Log(temp);
+            //camera.transform.rotation = temp;
         }
     }
 
