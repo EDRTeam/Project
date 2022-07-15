@@ -32,11 +32,12 @@ public class Exercise : MonoBehaviour
     private bool inited = false;
     public static Exercise Instance;
     private string filePath = Application.streamingAssetsPath + "/EditMode.txt";
+    public string EditAns;
     //编辑模式所需引用的变量
     public InputField[] Input;
     public InputField Timu;
     //public InputField Tishi;
-    public InputField RightAns;
+    //public InputField RightAns;
     public bool IsEdit;
     public string  ModleID = "1001";
     private int topicIndex = 1;//第几题
@@ -49,10 +50,10 @@ public class Exercise : MonoBehaviour
         Init();
         TextCsv();
         LoadAnswer();
-        toggleList[0].onValueChanged.AddListener((isOn) => AnswerRightRrongJudgment(isOn, "A"));
-        toggleList[1].onValueChanged.AddListener((isOn) => AnswerRightRrongJudgment(isOn, "B"));
-        toggleList[2].onValueChanged.AddListener((isOn) => AnswerRightRrongJudgment(isOn, "C"));
-        toggleList[3].onValueChanged.AddListener((isOn) => AnswerRightRrongJudgment(isOn, "D"));
+        toggleList[0].onValueChanged.AddListener((isOn) => AnswerRightRrongJudgment(0, isOn, "A"));
+        toggleList[1].onValueChanged.AddListener((isOn) => AnswerRightRrongJudgment(1, isOn, "B"));
+        toggleList[2].onValueChanged.AddListener((isOn) => AnswerRightRrongJudgment(2, isOn, "C"));
+        toggleList[3].onValueChanged.AddListener((isOn) => AnswerRightRrongJudgment(3, isOn, "D"));
         BtnTip.onClick.AddListener(() => Select_Answer(0));
         BtnBack.onClick.AddListener(() => Select_Answer(1));
         BtnNext.onClick.AddListener(() => Select_Answer(2));
@@ -65,12 +66,12 @@ public class Exercise : MonoBehaviour
         if (IsEdit)
         {
             EditBtn.SetActive(true);
-            RightAns.gameObject.SetActive(true);
+            //RightAns.gameObject.SetActive(true);
         }
         else
         {
             EditBtn.SetActive(false);
-            RightAns.gameObject.SetActive(false);
+            //RightAns.gameObject.SetActive(false);
         }
     }
     void Init()
@@ -158,6 +159,7 @@ public class Exercise : MonoBehaviour
         indexText.text = "第" + topicIndex + "题：";//第几题
         //print(ModleID);
         var exercise = Instance.GetExercises(ModleID, topicIndex);
+        EditAns = exercise["答案"].ToString();
         //TM_Text.text = (string)exercise["问题"];//题目
         Timu.text = exercise["问题"].ToString();
         //int idx = ArrayX[topicIndex].Length - 3;//有几个选项
@@ -169,7 +171,7 @@ public class Exercise : MonoBehaviour
         Input[1].text = exercise["B"].ToString();
         Input[2].text = exercise["C"].ToString();
         Input[3].text = exercise["D"].ToString();
-        RightAns.text = exercise["答案"].ToString();
+        //RightAns.text = exercise["答案"].ToString();
     }
     /*****************按钮功能******************/
     void Select_Answer(int index)
@@ -236,45 +238,64 @@ public class Exercise : MonoBehaviour
         }
     }
     /*****************题目对错判断******************/
-    void AnswerRightRrongJudgment(bool check, string index)
+    void AnswerRightRrongJudgment(int num, bool check, string index)
     {
-        if (check)
+        if (!IsEdit)
         {
-            //判断题目对错
-            bool isRight;
-            var exercise = Instance.GetExercises(ModleID, topicIndex);
-            if (((string)exercise["答案"]) == index)
+            if (check)
             {
-                tipsText.text = "<color=#27FF02FF>" + "恭喜你，答对了！" + "</color>";
-                isRight = true;
-                tipsbtn.SetActive(true);
-            }else{
-                tipsText.text = "<color=#FF0020FF>" + "对不起，答错了！" + "</color>";
-                isRight = false;
-                tipsbtn.SetActive(true);
-            }
-            //正确率计算
-            if (isAnserList[topicIndex])
-            {
-                tipsText.text = "<color=#FF0020FF>" + "这道题已答过！" + "</color>";
-            }else{
-                anserint++;
-                if (isRight){
-                    isRightNum++;
+                //判断题目对错
+                bool isRight;
+                var exercise = Instance.GetExercises(ModleID, topicIndex);
+                if (((string)exercise["答案"]) == index)
+                {
+                    tipsText.text = "<color=#27FF02FF>" + "恭喜你，答对了！" + "</color>";
+                    isRight = true;
+                    tipsbtn.SetActive(true);
                 }
-                isAnserList[topicIndex] = true;
-                TextAccuracy.text = "正确率：" + ((float)isRightNum / anserint * 100).ToString("f2") + "%";
+                else
+                {
+                    tipsText.text = "<color=#FF0020FF>" + "对不起，答错了！" + "</color>";
+                    isRight = false;
+                    tipsbtn.SetActive(true);
+                }
+                //正确率计算
+                if (isAnserList[topicIndex])
+                {
+                    tipsText.text = "<color=#FF0020FF>" + "这道题已答过！" + "</color>";
+                }
+                else
+                {
+                    anserint++;
+                    if (isRight)
+                    {
+                        isRightNum++;
+                    }
+                    isAnserList[topicIndex] = true;
+                    TextAccuracy.text = "正确率：" + ((float)isRightNum / anserint * 100).ToString("f2") + "%";
+                }
+                //禁用掉选项
+                for (int i = 0; i < toggleList.Count; i++)
+                {
+                    toggleList[i].interactable = false;
+                }
             }
-            //禁用掉选项
-            for (int i = 0; i < toggleList.Count; i++)
+        }
+        else
+        {
+            for (int i = 0; i < toggleList.Count; i++)
             {
-                toggleList[i].interactable = false;
+                if (i != num)
+                {
+                    toggleList[i].isOn = false;
+                }
             }
+            EditAns = index;
         }
     }
     public void Change()
     {
-        Instance.SetExercises(ModleID, topicIndex, Timu.text, RightAns.text, Input[0].text, Input[1].text, Input[2].text, Input[3].text);
+        Instance.SetExercises(ModleID, topicIndex, Timu.text, EditAns, Input[0].text, Input[1].text, Input[2].text, Input[3].text);
     }
     //编辑模式所需函数
     public bool SetMessage(string orbitalId, string messageid, string newMsg)

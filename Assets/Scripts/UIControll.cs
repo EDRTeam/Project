@@ -89,14 +89,9 @@ public class UIControll : MonoBehaviour
     //之后调用方便用的变量
     public int TargetSprit;
     //选择图纸
-    public void TuzhiBtn0()
+    public void TuzhiBtn(int Tuzhinum)
     {
-        TargetSprit = 0;
-        Yulantuzhi.GetComponent<Image>().sprite = TuzhiSprit[TargetSprit];
-    }
-    public void TuzhiBtn1()
-    {
-        TargetSprit = 1;
+        TargetSprit = Tuzhinum;
         Yulantuzhi.GetComponent<Image>().sprite = TuzhiSprit[TargetSprit];
     }
     public void Backtoshitu()
@@ -120,12 +115,29 @@ public class UIControll : MonoBehaviour
         Edittimu.SetActive(false);
         ShituModel.SetActive(true);
     }
+    //被改变的物体
+    public GameObject Shiyantuzhi;
+    //标准实验图纸序号
+    public int TargetExp;
+    //加载将要用于修改的图片的路径
+    public Sprite[] ShiyanSprit;
+    public void ExpBtn(int ExpNum)
+    {
+        TargetExp = ExpNum;
+        Shiyantuzhi.GetComponent<Image>().sprite = ShiyanSprit[TargetExp];
+    }
     public void FreeExp()
     {
         //自由实验摄像机
         cameras[3].gameObject.SetActive(true);
         FreeModel.SetActive(true);
         ExpModel .SetActive(false);
+    }
+    public GameObject StandardExpFace;
+    public void StandardExpIns()
+    {
+        StandardExpFace.SetActive(true);
+        ExpModel.SetActive(false);
     }
     public void StandardExp()
     {
@@ -134,9 +146,24 @@ public class UIControll : MonoBehaviour
         cameras[3].gameObject.SetActive(true);
         FreeModel.SetActive(true);   //后面根据实际实现应删除
         StandardModel.SetActive(true);
-        ExpModel.SetActive(false);
+        StandardExpFace.SetActive(false);
     }
-
+    public void StandardBackToExp()
+    {
+        ExpModel.SetActive(true);
+        StandardExpFace.SetActive(false);
+    }
+    public GameObject ExpTuzhi;
+    public GameObject ExpTargetTuzhi;
+    public void CheckExp()
+    {
+        ExpTuzhi.SetActive(true);
+        ExpTargetTuzhi.GetComponent<Image>().sprite = ShiyanSprit[TargetExp];
+    }
+    public void CloseCheckExp()
+    {
+        ExpTuzhi.SetActive(false);
+    }
     //从自由实验返回
     public void BacktoExp()
     {
@@ -192,6 +219,7 @@ public class UIControll : MonoBehaviour
 
     public void Modelzuoti()
     {
+        GameObject.Find("UIcontroller").GetComponent<Exercise>().LoadAnswer();
         //第一次进入习题
         if (flag_xiti)
         {
