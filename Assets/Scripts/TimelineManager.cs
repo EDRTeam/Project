@@ -15,7 +15,7 @@ public class TimelineManager : SceneSingleton<TimelineManager>
     [HideInInspector]
     public PlayableDirector playableDirector;
 
-    public TimelineAsset[] timelines;
+    public ScenarioTimeline[] scenarios;
 
     private PlayableDirector tempPlaybleDirector;
 
@@ -24,28 +24,25 @@ public class TimelineManager : SceneSingleton<TimelineManager>
     /// </summary>
     private List<PlayableDirector> currentPlayers = new List<PlayableDirector>();
 
-    protected override void Awake()
+    private void SetPD(int targetScenario)
     {
-        base.Awake();
-
-        if (!playableDirector)
-        {
-            playableDirector = GetComponent<PlayableDirector>();
-        }
+        playableDirector = scenarios[targetScenario].playableDirector;
         tempPlaybleDirector = playableDirector;
     }
 
     /// <summary>
     /// 播放单个timeline并执行回调action()
     /// </summary>
-    /// <param name="asset"></param>
+    /// <param name="inedx"></param>
     /// <param name="action"></param>
-    public void PlayTimeline(int inedx, Action action = null)
+    /// <param name="targetScenario"> 对应脚本 </param>
+    public void PlayTimeline(int targetScenario, int index, Action action = null)
     {
-        TimelineAsset asset = timelines[inedx];
+        SetPD(targetScenario);
+        TimelineAsset asset = scenarios[targetScenario].timelines[index];
         if (asset)
         {
-            Debug.Log("播放Timeline： " + asset.name);
+            Debug.Log("播放Timeline: " + asset.name);
             var playableDirectorGameObject = new GameObject(asset.name);
             var new_playableDirector = playableDirectorGameObject.AddComponent<PlayableDirector>();//播放Timeline时会临时添加一个PlaybleDirector
             new_playableDirector.extrapolationMode = DirectorWrapMode.None; //初始化
@@ -53,7 +50,9 @@ public class TimelineManager : SceneSingleton<TimelineManager>
             StartCoroutine(WaitTimelinePlay(asset, new_playableDirector, action));
         }
         else
+        {
             action();
+        }
     }
 
     /// <summary>
@@ -61,8 +60,9 @@ public class TimelineManager : SceneSingleton<TimelineManager>
     /// </summary>
     /// <param name="asset"></param>
     /// <param name="action"></param>
-    public void PlayTimeline(TimelineAsset asset, Action action = null)
+    public void PlayTimeline(int targetScenario, TimelineAsset asset, Action action = null)
     {
+        SetPD(targetScenario);
         if (asset)
         {
             var playableDirectorGameObject = new GameObject(asset.name);
@@ -80,8 +80,9 @@ public class TimelineManager : SceneSingleton<TimelineManager>
     /// </summary>
     /// <param name="asset"></param>
     /// <param name="action"></param>
-    public void PlayTimelines(TimelineAsset[] timelineAssets, Action action = null)
+    public void PlayTimelines(int targetScenario, TimelineAsset[] timelineAssets, Action action = null)
     {
+        SetPD(targetScenario);
         if (timelineAssets.Length > 0)
         {
             Debug.LogError("timelineAssets.Length > 0");

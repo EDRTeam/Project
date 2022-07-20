@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ModelHighLight : MonoBehaviour
 {
+
     //public GameObject cur_Obj;
 
     // Start is called before the first frame update
+
     void Start()
     {
         
@@ -67,8 +70,31 @@ public class ModelHighLight : MonoBehaviour
         gameObject.GetComponent<MeshRenderer>().materials[0].SetFloat("_Emission", 1);
     }
 
+    public void HighLightsOn()
+    {
+
+        foreach(var meshRenderer in gameObject.GetComponentsInChildren<MeshRenderer>())
+        {
+            if (meshRenderer != null)
+            {
+                meshRenderer.materials[0].SetFloat("_Emission", 1);
+            }
+        }
+        
+    }
     public void HighLightOff()
     {
         gameObject.GetComponent<MeshRenderer>().materials[0].SetFloat("_Emission", 0);
+    }
+
+    public void HighLightsOff()
+    {
+        foreach (var meshRenderer in gameObject.GetComponentsInChildren<MeshRenderer>())
+        {
+            if (meshRenderer != null)
+            {
+                meshRenderer.materials[0].SetFloat("_Emission", 0);
+            }
+        }
     }
 }

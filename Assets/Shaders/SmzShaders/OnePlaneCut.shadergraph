@@ -709,7 +709,7 @@
     },
     "m_Name": "Plane Position",
     "m_DefaultReferenceName": "Vector3_01c345c27275487b9a665343a50d7bc4",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_PlanePosition",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -963,8 +963,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -974.0,
-            "y": 774.0,
+            "x": -974.0001220703125,
+            "y": 748.0000610351563,
             "width": 208.0,
             "height": 127.0
         }
@@ -3740,7 +3740,7 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     },
-    "m_Space": 2
+    "m_Space": 0
 }
 
 {

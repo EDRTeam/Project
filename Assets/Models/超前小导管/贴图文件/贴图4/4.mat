@@ -134,10 +134,12 @@ Material:
     - Color_b79bdab3448a4331a9ee819379fc22ab: {r: 0.5960785, g: 0.5960785, b: 0.5960785, a: 0}
     - Color_b8e473e718c645d0ad947bbbcc6accfa: {r: 1, g: 0, b: 0, a: 0}
     - Vector2_93b92afa10784971b17331b97efd9ca2: {r: 0.2, g: 0.29, b: 0.36, a: 0.06}
-    - Vector3_01c345c27275487b9a665343a50d7bc4: {r: 0.65, g: 19.24, b: 0, a: 0}
-    - Vector3_ae6a45e627a2414ebd54a5b573ad5782: {r: -0.57, g: 0.9, b: 2.53, a: 0}
+    - Vector3_01c345c27275487b9a665343a50d7bc4: {r: 0, g: 0, b: 10, a: 0}
+    - Vector3_ae6a45e627a2414ebd54a5b573ad5782: {r: 0, g: 0, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _PlanePosition: {r: 0, g: -0.05, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

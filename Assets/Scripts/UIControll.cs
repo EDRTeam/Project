@@ -205,8 +205,7 @@ public class UIControll : MonoBehaviour
         //ShengchengModel.SetActive(true);
 
         //设置看模型的摄像机的初始位置
-        cameras[2].transform.position = trans_modelCameraOrigin[TargetSprit].position;
-        cameras[2].transform.rotation = trans_modelCameraOrigin[TargetSprit].rotation;
+        cameras[2].transform.SetPositionAndRotation(trans_modelCameraOrigin[TargetSprit].position, trans_modelCameraOrigin[TargetSprit].rotation);
         cameras[1].rect = new Rect(0.509f, 0.05f, 0.47f, 0.9f);
         cameras[2].rect = new Rect(0.021f, 0.05f, 0.47f, 0.9f);
         cameras[1].gameObject.SetActive(true);
@@ -218,8 +217,8 @@ public class UIControll : MonoBehaviour
         originScale = Graph1[TargetSprit].transform.parent.GetComponent<RectTransform>().localScale;
 
         viewer.SetActive(true);
-        //播放生成模型的动画
-        TimelineManager.instance.PlayTimeline(TargetSprit * 2, ()=>{
+        //播放生成模型的动画  0是生成动画  1是习题动画
+        TimelineManager.instance.PlayTimeline(TargetSprit, 0, ()=>{
             //播放完生成模型动画让习题按钮可点击
             buttons[0].enabled = true;
         });
@@ -246,7 +245,7 @@ public class UIControll : MonoBehaviour
             Modeltimu.GetComponent<Image>().DOFade(0.8f, 0.6f);
 
             //回调 动画播放完成显示题目
-            TimelineManager.instance.PlayTimeline(TargetSprit * 2 + 1, () => {
+            TimelineManager.instance.PlayTimeline(TargetSprit, 1, () => {
                 CameraController.instance.check = true;
                 Xiti_CallOut();
                 cameras[2].gameObject.SetActive(false);
@@ -301,7 +300,7 @@ public class UIControll : MonoBehaviour
 
     public void Xiti_DongHua()
     {
-        TimelineManager.instance.PlayTimeline(2 * TargetSprit + 1, () => {
+        TimelineManager.instance.PlayTimeline(TargetSprit, 1, () => {
             cameras[2].gameObject.SetActive(false);
             //播放完脚本需求动画之后可再点击
             buttons[1].enabled = true;
@@ -383,6 +382,7 @@ public class UIControll : MonoBehaviour
     //从识图回到图库列表
     public void ShituToToku()
     {
+        Graph1[TargetSprit].SetActive(false);
         GameObject.Find("UIcontroller").GetComponent<Exercise>().Chongzhi();
         GameObject.Find("UIcontroller").GetComponent<Exercise>().LoadAnswer();
         ShituModel.SetActive(false);
