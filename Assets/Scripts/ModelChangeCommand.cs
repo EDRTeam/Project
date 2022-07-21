@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MeshMakerNamespace;
 using System;
+using MeshMakerNamespace;
 
 public class ModelChangeCommand : Command
 {
