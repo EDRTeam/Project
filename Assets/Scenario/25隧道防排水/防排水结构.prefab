@@ -1880,7 +1880,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6198907147035152275}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 3412.47, y: -477.5, z: -1059}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
@@ -1898,7 +1898,7 @@ Transform:
   - {fileID: 6851657202551711918}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!320 &7450303625501530062
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -1908,8 +1908,8 @@ PlayableDirector:
   m_GameObject: {fileID: 6198907147035152275}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: feecd6e4b8371d246b844b83f9a576fb, type: 2}
-  m_InitialState: 1
+  m_PlayableAsset: {fileID: 11400000, guid: c030cc67f77fce847957424f2cf6874c, type: 2}
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
