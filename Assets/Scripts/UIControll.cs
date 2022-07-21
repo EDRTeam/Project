@@ -110,7 +110,7 @@ public class UIControll : MonoBehaviour
     public GameObject Graph;
     public void ChooseShitu()
     {
-        if (TargetSprit >= 2)
+        if (TargetSprit >= 1)
         {
             Graph.GetComponent<RectTransform>().sizeDelta = new Vector2(2400, 1920);
         }

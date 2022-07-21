@@ -9,9 +9,9 @@ public class Shitu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Sprite[] Tuzhi;
     public Image image1;
-    public Text zhushi;
+    //public Text zhushi;
     public static Shitu Instance;
-    public string[] wenben;
+    //public string[] wenben;
     static int  num=0;
 
     void Start()
@@ -34,11 +34,12 @@ public class Shitu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         
     }
+    /*
     public void showzhushi()
     {
        zhushi.text = wenben[num];
         num = 0;
 
     }
-   
+   */
 }
