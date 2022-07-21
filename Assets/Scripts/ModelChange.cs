@@ -1,4 +1,3 @@
-using MeshMakerNamespace;
 using System.Collections.Generic;
 using UnityEngine;
 public class ModelChange : SceneSingleton<ModelChange>
@@ -60,7 +59,7 @@ public class ModelChange : SceneSingleton<ModelChange>
         Target = null;
         Brush = null;
         getB = !getB;
-
+        mcPanel.SetActive(false);
         //让其他按钮不可操作
         if (getB)
         {

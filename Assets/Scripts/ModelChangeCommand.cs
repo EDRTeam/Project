@@ -54,7 +54,8 @@ public class ModelChangeCommand : Command
         csg.Brush = _Brush;
         csg.Target = _Target;
         csg.OperationType = OperationType;
-        csg.customMaterial = new Material(Shader.Find("Standard")); // 材质
+       
+        csg.customMaterial = new Material(_Target.GetComponent<Renderer>().material.shader); // 材质
         csg.useCustomMaterial = false; // 使用上面的材质来填充切口
         csg.hideGameObjects = true; // 操作后隐藏目标和画笔对象
         csg.keepSubmeshes = true; // 保持原始的网格和材质

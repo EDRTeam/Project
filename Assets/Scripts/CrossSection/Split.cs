@@ -29,6 +29,11 @@ public class Split : MonoBehaviour
         foreach (Collider c in colliders)
         {
             SlicedHull hull = c.gameObject.Slice(transform.localPosition, transform.up);
+
+            if (hull == null)
+            {
+                Debug.Log("ÆÊÇÐÊ§°Ü");
+            }
             if (hull != null)
             {
                 GameObject lower = hull.CreateLowerHull(c.gameObject, matCross);
