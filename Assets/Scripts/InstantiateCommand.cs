@@ -23,32 +23,7 @@ public class InstantiateCommand : Command
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (isDrag)
-        {
-            //Ë¢ÐÂÎ»ÖÃ
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 1000f))
-            {
-                dragObj.transform.position = hit.point;
-                dragObj.SetActive(true);
-            }
-            else
-            {
-                dragObj.SetActive(false);
-            }
-            
-            if (Input.GetMouseButtonUp(0))
-            {
-                if (!dragObj.activeSelf)
-                {
-                    Destroy(dragObj);
-                }
-                isDrag = false;
-                dragObj = null;
-            }
-        }*/
+
     }
 
     public override void Execute()

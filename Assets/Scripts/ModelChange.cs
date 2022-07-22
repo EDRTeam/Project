@@ -3,7 +3,6 @@ using UnityEngine;
 public class ModelChange : SceneSingleton<ModelChange>
 {
     public GameObject freeExpPos;//自由拼搭父对象
-    public GameObject groundPlane; //地面
 
     [SerializeField]
     private GameObject Target;//要操作的目标物体

@@ -418,6 +418,7 @@ public class Exercise : MonoBehaviour
     {
         if (dataDict.ContainsKey(orbitalId))
         {
+            //Debug.Log(orbitalId);
             var orbitaData = dataDict[orbitalId] as Dictionary<string, object>;
             if (orbitaData != null && orbitaData.ContainsKey("exercises"))
             {
